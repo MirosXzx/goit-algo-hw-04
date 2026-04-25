@@ -1,7 +1,7 @@
 def get_cats_info(path):
-    try:
-        cats = []
+    cats = []
 
+    try:
         with open(path, "r", encoding="utf-8") as file:
             for line in file:
                 cat_id, name, age = line.strip().split(",")
@@ -12,13 +12,9 @@ def get_cats_info(path):
                     "age": age
                 })
 
-        print(cats)
+        return cats
 
     except FileNotFoundError:
-        print("Файл не знайдено")
-    except Exception as e:
-        print(f"Помилка: {e}")
-
-
-# запуск
-get_cats_info("cats.txt")
+        return []
+    except Exception:
+        return []
