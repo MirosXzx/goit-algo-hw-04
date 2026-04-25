@@ -1,59 +1,37 @@
 def parse_input(user_input):
-    parts = user_input.strip().split()
-
-    if not parts:  # якщо нічого не ввели
-        return "", []
-
-    command = parts[0].lower()
-    args = parts[1:]
-
-    return command, args
+    parts = user_input.split()
+    command = parts[0].lower() if parts else ""
+    return command, parts[1:]
 
 
 def add_contact(args, contacts):
-    if len(args) != 2:
-        return "Invalid command."
-
     name, phone = args
     contacts[name] = phone
     return "Contact added."
 
 
 def change_contact(args, contacts):
-    if len(args) != 2:
-        return "Invalid command."
-
     name, phone = args
 
     if name in contacts:
         contacts[name] = phone
         return "Contact updated."
-    else:
-        return "Contact not found."
+    return "Contact not found."
 
 
 def show_phone(args, contacts):
-    if len(args) != 1:
-        return "Invalid command."
-
     name = args[0]
 
     if name in contacts:
         return contacts[name]
-    else:
-        return "Contact not found."
+    return "Contact not found."
 
 
 def show_all(contacts):
     if not contacts:
-        return "No contacts saved."
+        return "No contacts yet."
 
-    result = []
-
-    for name, phone in contacts.items():
-        result.append(f"{name}: {phone}")
-
-    return "\n".join(result)
+    return "\n".join(f"{name}: {phone}" for name, phone in contacts.items())
 
 
 def main():
@@ -62,8 +40,7 @@ def main():
     print("Welcome to the assistant bot!")
 
     while True:
-        user_input = input("Enter a command: ")
-
+        user_input = input("Enter command: ")
         command, args = parse_input(user_input)
 
         if command in ["close", "exit"]:
